@@ -1,0 +1,524 @@
+import { useEffect, useRef, useState, type RefObject } from 'react'
+import {
+  MARQUEE_ITEMS,
+  MARQUEE_VIDEO_PLAYBACK_RATE,
+  type MarqueeItem,
+} from '../../data/profile'
+import MarqueeVideoModal, {
+  type MarqueeVideoModalItem,
+} from '../ui/MarqueeVideoModal'
+import CaseStudyLabel from '../ui/CaseStudyLabel'
+import LoadingOverlay from '../ui/LoadingOverlay'
+import {
+  initWeChatVideoEnvironment,
+  isWeChatBrowser,
+  playVideoWithUserGesture,
+  playWeChatVideo,
+  unlockWeChatVideoAutoplay,
+} from '../../lib/wechatEnv'
+
+const WECHAT_MODE = typeof window !== 'undefined' && isWeChatBrowser()
+
+const ROW_ITEMS = MARQUEE_ITEMS.slice(0, 4)
+const GAP_PX = 12
+const COLS = 4
+const MOBILE_SIDE_PADDING = 32
+
+function cardWidthForViewport(viewportWidth: number) {
+  if (viewportWidth < 640) return viewportWidth - MOBILE_SIDE_PADDING
+  return Math.max(260, (viewportWidth - GAP_PX * (COLS - 1)) / COLS)
+}
+
+function cardAspectRatio(isMobile: boolean) {
+  return isMobile ? '16 / 9' : '420 / 270'
+}
+
+function marqueeItemKey(item: MarqueeItem, index: number) {
+  return `${item.video ?? item.image ?? 'card'}-${index}`
+}
+
+function useCardInView(
+  ref: RefObject<HTMLElement | null>,
+  enabled: boolean,
+  relaxed = false,
+) {
+  const [inView, setInView] = useState(false)
+
+  useEffect(() => {
+    if (!enabled) {
+      setInView(false)
+      return
+    }
+
+    const el = ref.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setInView(
+          relaxed
+            ? entry.isIntersecting
+            : entry.isIntersecting && entry.intersectionRatio >= 0.2,
+        )
+      },
+      { threshold: relaxed ? [0, 0.1] : [0, 0.2, 0.45] },
+    )
+
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [enabled, relaxed])
+
+  return inView
+}
+
+function MarqueeCaption({ text }: { text: string }) {
+  return (
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-3 pb-2.5 pt-10 sm:px-4 sm:pb-3 sm:pt-12">
+      <p className="text-[11px] font-medium leading-snug text-mist sm:text-xs md:text-sm">
+        {text}
+      </p>
+    </div>
+  )
+}
+
+function MarqueeVideo({
+  src,
+  poster,
+  cardWidth,
+  isMobile,
+  playbackRate,
+  caption,
+  preload = 'none',
+  shouldPlay,
+  onOpen,
+}: {
+  src: string
+  poster?: string
+  cardWidth: number
+  isMobile: boolean
+  playbackRate: number
+  caption?: string
+  preload?: 'auto' | 'metadata' | 'none'
+  shouldPlay: boolean
+  onOpen: () => void
+}) {
+  const containerRef = useRef<HTMLButtonElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const tapRef = useRef({ startedPaused: false })
+  const inView = useCardInView(containerRef, shouldPlay, isMobile || WECHAT_MODE)
+  const [buffered, setBuffered] = useState(false)
+  const [playing, setPlaying] = useState(false)
+  const shouldLoad = shouldPlay && inView
+  const showVideo = WECHAT_MODE ? playing : buffered
+  const weChatTapToPlay = WECHAT_MODE && isMobile
+
+  useEffect(() => {
+    if (!shouldLoad) {
+      setBuffered(false)
+      setPlaying(false)
+    }
+  }, [shouldLoad])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video) return
+
+    if (!shouldLoad) {
+      video.pause()
+      return
+    }
+
+    if (WECHAT_MODE) video.preload = 'auto'
+
+    const markBuffered = () => setBuffered(true)
+    const markPlaying = () => setPlaying(true)
+    const markPaused = () => setPlaying(false)
+    const tryAutoplay = () => playWeChatVideo(video)
+
+    video.addEventListener('loadeddata', markBuffered)
+    video.addEventListener('canplay', markBuffered)
+    video.addEventListener('canplaythrough', tryAutoplay)
+    video.addEventListener('playing', markPlaying)
+    video.addEventListener('pause', markPaused)
+
+    if (video.readyState >= 2) {
+      markBuffered()
+      tryAutoplay()
+    }
+
+    return () => {
+      video.removeEventListener('loadeddata', markBuffered)
+      video.removeEventListener('canplay', markBuffered)
+      video.removeEventListener('canplaythrough', tryAutoplay)
+      video.removeEventListener('playing', markPlaying)
+      video.removeEventListener('pause', markPaused)
+    }
+  }, [src, shouldLoad])
+
+  useEffect(() => {
+    const video = videoRef.current
+    if (!video || !shouldLoad || !buffered) return
+
+    video.playbackRate = playbackRate
+    playWeChatVideo(video)
+  }, [shouldLoad, buffered, playbackRate, src])
+
+  const handleTouchStart = () => {
+    const video = videoRef.current
+    tapRef.current.startedPaused = Boolean(video?.paused)
+    playVideoWithUserGesture(video)
+  }
+
+  const handleOpen = () => {
+    if (weChatTapToPlay && tapRef.current.startedPaused) {
+      playVideoWithUserGesture(videoRef.current)
+      tapRef.current.startedPaused = false
+      return
+    }
+    onOpen()
+  }
+
+  return (
+    <button
+      type="button"
+      ref={containerRef}
+      onTouchStart={weChatTapToPlay ? handleTouchStart : undefined}
+      onClick={handleOpen}
+      className="glass-panel group relative shrink-0 cursor-pointer overflow-hidden rounded-2xl bg-[#0a0a0c]/50 text-left transition-transform hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF9FFC]"
+      style={{
+        width: cardWidth,
+        aspectRatio: cardAspectRatio(isMobile),
+      }}
+      aria-label={caption ? `Play full screen: ${caption}` : 'Play workflow video full screen'}
+    >
+      {poster && !showVideo ? (
+        <img
+          src={poster}
+          alt=""
+          loading={WECHAT_MODE || isMobile ? 'eager' : 'lazy'}
+          decoding="async"
+          className={`pointer-events-none absolute inset-0 z-[1] h-full w-full ${
+            isMobile ? 'object-contain' : 'object-cover'
+          }`}
+          aria-hidden
+        />
+      ) : null}
+
+      {shouldLoad && !buffered ? (
+        <LoadingOverlay label="LOADING VIDEO..." className="z-[3] bg-black/45" />
+      ) : null}
+
+      {weChatTapToPlay && buffered && !playing ? (
+        <div className="pointer-events-none absolute inset-0 z-[4] flex items-center justify-center bg-black/20">
+          <span className="rounded-full border border-white/25 bg-black/45 px-3 py-1.5 text-[11px] text-mist/90 backdrop-blur-sm">
+            TAP TO PLAY
+          </span>
+        </div>
+      ) : null}
+
+      <video
+        ref={videoRef}
+        src={shouldLoad ? src : undefined}
+        autoPlay
+        loop
+        muted
+        playsInline
+        poster={poster}
+        preload={WECHAT_MODE ? 'auto' : isMobile ? 'metadata' : preload}
+        disablePictureInPicture
+        className={`marquee-video pointer-events-none relative z-[2] h-full w-full ${
+          isMobile ? 'object-contain' : 'object-cover'
+        } ${showVideo ? 'opacity-100' : 'opacity-0'}`}
+      />
+
+      <div
+        className="pointer-events-none absolute inset-0 z-[2] bg-black/0 transition-colors group-hover:bg-black/20"
+        aria-hidden
+      />
+      {caption ? <MarqueeCaption text={caption} /> : null}
+    </button>
+  )
+}
+
+function MarqueeCard({
+  item,
+  cardWidth,
+  isMobile,
+  previewActive,
+  onVideoOpen,
+}: {
+  item: MarqueeItem
+  cardWidth: number
+  isMobile: boolean
+  previewActive: boolean
+  onVideoOpen: (item: MarqueeVideoModalItem) => void
+}) {
+  if (item.video) {
+    return (
+      <MarqueeVideo
+        src={item.video}
+        poster={item.videoPoster}
+        cardWidth={cardWidth}
+        isMobile={isMobile}
+        playbackRate={MARQUEE_VIDEO_PLAYBACK_RATE}
+        caption={item.caption}
+        preload={item.videoPreload ?? 'none'}
+        shouldPlay={previewActive}
+        onOpen={() =>
+          onVideoOpen({
+            src: WECHAT_MODE ? item.video! : (item.videoHd ?? item.video!),
+            poster: item.videoPoster,
+            caption: item.caption,
+          })
+        }
+      />
+    )
+  }
+
+  return (
+    <div
+      className="glass-panel relative shrink-0 overflow-hidden rounded-2xl bg-[#0a0a0c]/50"
+      style={{
+        width: cardWidth,
+        aspectRatio: cardAspectRatio(isMobile),
+      }}
+    >
+      <img
+        src={previewActive ? item.image : undefined}
+        alt={item.caption ?? ''}
+        loading="lazy"
+        decoding="async"
+        className={`h-full w-full ${isMobile ? 'object-contain' : 'object-cover'}`}
+      />
+      {item.caption ? <MarqueeCaption text={item.caption} /> : null}
+    </div>
+  )
+}
+
+function MobileMarqueeCarousel({
+  items,
+  cardWidth,
+  active,
+  onVideoOpen,
+}: {
+  items: MarqueeItem[]
+  cardWidth: number
+  active: boolean
+  onVideoOpen: (item: MarqueeVideoModalItem) => void
+}) {
+  const scrollRef = useRef<HTMLDivElement>(null)
+  const [index, setIndex] = useState(0)
+
+  const slideStride = cardWidth + GAP_PX
+
+  const syncIndexFromScroll = () => {
+    const el = scrollRef.current
+    if (!el) return
+    const nextIndex = Math.round(el.scrollLeft / slideStride)
+    setIndex(Math.max(0, Math.min(nextIndex, items.length - 1)))
+  }
+
+  useEffect(() => {
+    setIndex(0)
+    scrollRef.current?.scrollTo({ left: 0 })
+  }, [items.length, slideStride])
+
+  useEffect(() => {
+    const el = scrollRef.current
+    if (!el) return
+
+    el.addEventListener('scroll', syncIndexFromScroll, { passive: true })
+    return () => el.removeEventListener('scroll', syncIndexFromScroll)
+  }, [items.length, slideStride])
+
+  const scrollToIndex = (targetIndex: number) => {
+    const el = scrollRef.current
+    if (!el) return
+    el.scrollTo({ left: targetIndex * slideStride, behavior: 'smooth' })
+    setIndex(targetIndex)
+  }
+
+  return (
+    <div className="w-full">
+      <div
+        ref={scrollRef}
+        className="w-full overflow-x-auto overscroll-x-contain pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
+        <div className="flex snap-x snap-mandatory gap-3">
+          {items.map((item, i) => (
+            <div key={marqueeItemKey(item, i)} className="shrink-0 snap-center">
+              <MarqueeCard
+                item={item}
+                cardWidth={cardWidth}
+                isMobile
+                previewActive={active && i === index}
+                onVideoOpen={onVideoOpen}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-3 flex items-center justify-center gap-1.5" aria-hidden>
+        {items.map((item, i) => (
+          <button
+            key={marqueeItemKey(item, i)}
+            type="button"
+            aria-label={`Go to workflow ${i + 1}`}
+            onClick={() => scrollToIndex(i)}
+            className={`h-1.5 rounded-full transition-all duration-300 ${
+              i === index ? 'w-5 bg-[#FF9FFC]' : 'w-1.5 bg-mist/25'
+            }`}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function MarqueeRow({
+  items,
+  parallaxOffset,
+  cardWidth,
+  active,
+  onVideoOpen,
+}: {
+  items: MarqueeItem[]
+  parallaxOffset: number
+  cardWidth: number
+  active: boolean
+  onVideoOpen: (item: MarqueeVideoModalItem) => void
+}) {
+  return (
+    <div className="w-full overflow-hidden">
+      <div className="flex gap-3" style={{ marginLeft: `${parallaxOffset}px` }}>
+        {items.map((item, i) => (
+          <div key={marqueeItemKey(item, i)} className="shrink-0">
+            <MarqueeCard
+              item={item}
+              cardWidth={cardWidth}
+              isMobile={false}
+              previewActive={active}
+              onVideoOpen={onVideoOpen}
+            />
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+export default function MarqueeSection() {
+  const sectionRef = useRef<HTMLElement>(null)
+  const [offset, setOffset] = useState(0)
+  const [active, setActive] = useState(false)
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== 'undefined' ? window.innerWidth < 640 : false,
+  )
+  const [cardWidth, setCardWidth] = useState(() =>
+    cardWidthForViewport(typeof window !== 'undefined' ? window.innerWidth : 1440),
+  )
+  const [modalItem, setModalItem] = useState<MarqueeVideoModalItem | null>(null)
+
+  useEffect(() => {
+    const firstPoster = ROW_ITEMS[0]?.videoPoster
+    if (!firstPoster) return
+
+    const img = new Image()
+    img.decoding = 'async'
+    img.src = firstPoster
+  }, [])
+
+  useEffect(() => {
+    const onResize = () => {
+      const width = window.innerWidth
+      setIsMobile(width < 640)
+      setCardWidth(cardWidthForViewport(width))
+    }
+    onResize()
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setActive(entry.isIntersecting),
+      { rootMargin: '160px', threshold: 0.02 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    initWeChatVideoEnvironment()
+  }, [])
+
+  useEffect(() => {
+    if (!active || !WECHAT_MODE) return
+
+    unlockWeChatVideoAutoplay()
+    const t1 = globalThis.setTimeout(unlockWeChatVideoAutoplay, 800)
+    const t2 = globalThis.setTimeout(unlockWeChatVideoAutoplay, 2500)
+    const t3 = globalThis.setTimeout(unlockWeChatVideoAutoplay, 5000)
+    return () => {
+      globalThis.clearTimeout(t1)
+      globalThis.clearTimeout(t2)
+      globalThis.clearTimeout(t3)
+    }
+  }, [active, isMobile])
+
+  useEffect(() => {
+    if (isMobile) return
+
+    let raf = 0
+    const onScroll = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const el = sectionRef.current
+        if (!el) return
+        const sectionTop = el.getBoundingClientRect().top + window.scrollY
+        const value = (window.scrollY - sectionTop + window.innerHeight) * 0.3
+        setOffset(value)
+      })
+    }
+
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('scroll', onScroll)
+    }
+  }, [isMobile])
+
+  const parallaxOffset = Math.max(0, offset - 200)
+  const previewActive = active && !modalItem
+
+  return (
+    <section
+      ref={sectionRef}
+      className="relative z-30 overflow-x-clip bg-dark px-4 pb-10 pt-6 sm:px-0 sm:pb-8 sm:pt-12 md:pt-16 lg:pt-20"
+    >
+      <CaseStudyLabel className="mb-4 sm:mb-5 sm:pl-8 md:pl-10" />
+      {isMobile ? (
+        <MobileMarqueeCarousel
+          items={ROW_ITEMS}
+          cardWidth={cardWidth}
+          active={previewActive}
+          onVideoOpen={setModalItem}
+        />
+      ) : (
+        <MarqueeRow
+          items={ROW_ITEMS}
+          parallaxOffset={parallaxOffset}
+          cardWidth={cardWidth}
+          active={previewActive}
+          onVideoOpen={setModalItem}
+        />
+      )}
+      <MarqueeVideoModal item={modalItem} onClose={() => setModalItem(null)} />
+    </section>
+  )
+}
