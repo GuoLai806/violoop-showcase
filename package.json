@@ -9,6 +9,7 @@
     "shortcut": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/create-dev-shortcut.ps1",
     "start": "powershell -NoProfile -ExecutionPolicy Bypass -File ./scripts/start-dev.ps1",
     "build": "tsc -b && vite build && mkdir -p dist/server && cp server/index.js dist/server/index.js",
+    "build:github": "tsc -b && vite build --mode github",
     "preview": "vite preview",
     "marquee:hd": "node scripts/process-marquee-hd.mjs"
   },
