@@ -12,28 +12,22 @@ export type MarqueeItem = {
 }
 
 const workflows = [
-  ['violoop-01', 'WhatsApp → CRM · Extract leads and create the record'],
-  ['violoop-02', 'Shopify → QuickBooks · Review and reconcile orders'],
-  ['violoop-03', 'OpenEMR → Authorization · Work inside legacy software'],
-  ['violoop-04', 'Phone → Desktop · Command your computer from anywhere'],
+  ['agent-layer', 'THE AGENT LAYER · One intelligent surface across every app'],
+  ['plug-play', 'PLUG IN · Turn the computer you already own agent-ready'],
+  ['physical-approval', 'PHYSICAL AUTHORITY · Violoop prepares, you release the action'],
+  ['hardware-anatomy', 'PURPOSE-BUILT HARDWARE · Vision, control and trust in one device'],
+  ['local-vision', 'LOCAL VISION · Screen context stays close to the machine'],
 ] as const
 
 export const MARQUEE_ITEMS: MarqueeItem[] = workflows.map(([name, caption]) => ({
   caption,
-  video: asset(`images/marquee/${name}.mp4`),
-  videoHd: asset(`images/marquee/${name}.mp4`),
-  videoPoster: asset(`images/marquee/${name}.webp`),
+  video: asset(`images/editorial/${name}.mp4`),
+  videoHd: asset(`images/editorial/${name}.mp4`),
+  videoPoster: asset(`images/editorial/${name}.webp`),
   videoPreload: 'metadata',
 }))
 
 export const MARQUEE_VIDEO_PLAYBACK_RATE = 1
-
-export const DECOR_IMAGES = {
-  moon: asset('images/violoop/ports.png'),
-  object: asset('images/violoop/package.jpg'),
-  lego: asset('images/violoop/security.png'),
-  group: asset('images/violoop/hero-product.png'),
-}
 
 export const profile = {
   displayName: 'VIOLOOP',
@@ -45,9 +39,7 @@ export const profile = {
   aboutTextZh:
     'VIOLOOP is not another computer. It is the second user of the computer you already own.\nIt sees the screen, understands context, and works across applications—\nthen gives the final decision back to you before anything irreversible happens.',
   contact: {
-    email: 'hello@violoop.com',
-    wechat: 'VIOLOOP',
-    location: 'Desktop AI Operator · Product Demo',
+    location: 'Screen-Aware AI Hardware · Early Access',
   },
   services: [
     { number: '01', name: 'Sees every screen', description: 'OCR, interface recognition, and visual understanding let Violoop work even inside legacy systems with no API.' },

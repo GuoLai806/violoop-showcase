@@ -1,7 +1,7 @@
 import ContactButton from '../ui/ContactButton'
 import FadeIn from '../ui/FadeIn'
 import SplitText from '../ui/SplitText'
-import { DECOR_IMAGES, profile } from '../../data/profile'
+import { profile } from '../../data/profile'
 
 export default function AboutSection() {
   return (
@@ -9,50 +9,6 @@ export default function AboutSection() {
       id="about"
       className="relative flex min-h-screen flex-col items-center overflow-hidden bg-dark px-5 py-20 sm:px-8 md:px-10 md:py-28"
     >
-      <FadeIn delay={0.1} x={-80} y={0} duration={0.9} className="absolute top-[4%] left-[1%] sm:left-[2%] md:left-[4%]">
-        <img
-          src={DECOR_IMAGES.moon}
-          alt=""
-          className="w-[120px] sm:w-[160px] md:w-[210px]"
-        />
-      </FadeIn>
-
-      <FadeIn
-        delay={0.25}
-        x={-80}
-        y={0}
-        duration={0.9}
-        className="pointer-events-none absolute bottom-[6%] left-0 z-[1] sm:bottom-[7%] sm:left-1 md:left-2 lg:left-3"
-      >
-        <img
-          src={DECOR_IMAGES.object}
-          alt=""
-          className="w-[100px] sm:w-[140px] md:w-[180px]"
-        />
-      </FadeIn>
-
-      <FadeIn delay={0.15} x={80} y={0} duration={0.9} className="absolute top-[4%] right-[1%] sm:right-[2%] md:right-[4%]">
-        <img
-          src={DECOR_IMAGES.lego}
-          alt=""
-          className="w-[120px] sm:w-[160px] md:w-[210px]"
-        />
-      </FadeIn>
-
-      <FadeIn
-        delay={0.3}
-        x={80}
-        y={0}
-        duration={0.9}
-        className="pointer-events-none absolute bottom-[6%] right-0 z-[1] sm:bottom-[7%] sm:right-1 md:right-2 lg:right-3"
-      >
-        <img
-          src={DECOR_IMAGES.group}
-          alt=""
-          className="w-[130px] sm:w-[170px] md:w-[220px]"
-        />
-      </FadeIn>
-
       <div className="relative z-10 flex w-full flex-col items-center gap-10 sm:gap-14 md:gap-16">
         <FadeIn delay={0} y={40}>
           <h2

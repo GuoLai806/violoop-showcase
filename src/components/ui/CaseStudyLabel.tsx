@@ -8,7 +8,7 @@ export default function CaseStudyLabel({ className = '' }: CaseStudyLabelProps) 
   return (
     <div className={`flex items-center gap-2.5 ${className}`}>
       <span className="text-[9px] uppercase tracking-[0.18em] text-mist/35 sm:text-xs">
-        Live Workflows by
+        Concept Films by
       </span>
       <img
         src={CURRENT_COMPANY.logo}

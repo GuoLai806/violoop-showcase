@@ -6,6 +6,7 @@ import MapSection from './components/sections/MapSection'
 import ProductsSection from './components/sections/ProductsSection'
 import SiteNav from './components/ui/SiteNav'
 import ContactFooter from './components/sections/ContactFooter'
+import { ArchitectureSection, FaqSection, ModesSection, PricingSection } from './components/sections/ExperienceSections'
 
 const ModelPreviewPage = lazy(() => import('./components/sections/ModelPreviewPage'))
 
@@ -26,6 +27,10 @@ export default function App() {
       <AboutSection />
       <MapSection />
       <ProductsSection />
+      <ModesSection />
+      <ArchitectureSection />
+      <PricingSection />
+      <FaqSection />
       <div className="relative z-10 bg-dark">
         <ContactFooter />
       </div>

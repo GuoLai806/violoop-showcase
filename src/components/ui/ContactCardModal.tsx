@@ -1,25 +1,15 @@
 import { AnimatePresence, motion } from 'framer-motion'
-import { Mail, X } from 'lucide-react'
+import { ArrowUpRight, ShieldCheck, Sparkles, X } from 'lucide-react'
 import { useEffect } from 'react'
-import { useCopyFeedback } from '../../hooks/useCopyFeedback'
-import { PORTRAIT_URL, profile } from '../../data/profile'
-import { CURRENT_COMPANY } from '../../data/companies'
+import { PORTRAIT_URL } from '../../data/profile'
 import BorderGlow from './BorderGlow'
-import WeChatIcon from './WeChatIcon'
 
-type ContactCardModalProps = {
-  open: boolean
-  onClose: () => void
-}
+type ContactCardModalProps = { open: boolean; onClose: () => void }
 
 export default function ContactCardModal({ open, onClose }: ContactCardModalProps) {
-  const { copied, copy } = useCopyFeedback()
-
   useEffect(() => {
     if (!open) return
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
-    }
+    const onKey = (event: KeyboardEvent) => event.key === 'Escape' && onClose()
     document.body.style.overflow = 'hidden'
     window.addEventListener('keydown', onKey)
     return () => {
@@ -28,113 +18,39 @@ export default function ContactCardModal({ open, onClose }: ContactCardModalProp
     }
   }, [open, onClose])
 
-  const copyWeChat = () => copy(profile.contact.wechat)
-
   return (
     <AnimatePresence>
       {open && (
-        <motion.div
-          className="fixed inset-0 z-[100] flex items-center justify-center p-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="contact-card-title"
-        >
-          <button
-            type="button"
-            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-            aria-label="Close"
-            onClick={onClose}
-          />
+        <motion.div className="fixed inset-0 z-[100] flex items-center justify-center p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} role="dialog" aria-modal="true" aria-labelledby="early-access-title">
+          <button type="button" className="absolute inset-0 bg-black/75 backdrop-blur-md" aria-label="Close" onClick={onClose} />
+          <motion.div initial={{ opacity: 0, y: 26, scale: 0.95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 16, scale: 0.98 }} transition={{ duration: 0.28, ease: [0.25, 0.1, 0.25, 1] }} className="relative w-full max-w-lg">
+            <BorderGlow edgeSensitivity={30} glowColor="40 80 80" backgroundColor="#120F17" borderRadius={30} glowRadius={46} glowIntensity={1} coneSpread={28} animated={false} colors={['#c084fc', '#f472b6', '#38bdf8']} className="w-full">
+              <button type="button" onClick={onClose} className="absolute right-4 top-4 z-10 rounded-full p-2 text-mist/60 transition hover:bg-white/5 hover:text-mist" aria-label="Close early access panel"><X className="h-5 w-5" /></button>
 
-          <motion.div
-            initial={{ opacity: 0, y: 24, scale: 0.96 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.98 }}
-            transition={{ duration: 0.25, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative w-full max-w-sm"
-          >
-            <BorderGlow
-              edgeSensitivity={30}
-              glowColor="40 80 80"
-              backgroundColor="#120F17"
-              borderRadius={28}
-              glowRadius={40}
-              glowIntensity={1}
-              coneSpread={25}
-              animated={false}
-              colors={['#c084fc', '#f472b6', '#38bdf8']}
-              className="w-full"
-            >
-              <button
-                type="button"
-                onClick={onClose}
-                className="absolute right-4 top-4 z-10 rounded-full p-1.5 text-mist/60 transition-colors hover:bg-white/5 hover:text-mist"
-                aria-label="Close contact card"
-              >
-                <X className="h-5 w-5" />
-              </button>
-
-              <div className="px-6 pb-6 pt-8 text-center">
-                <div className="glass-panel glass-panel-subtle mx-auto mb-4 flex h-28 w-20 items-end justify-center overflow-hidden rounded-2xl bg-[#0a0a0c]/40">
-                  <img
-                    src={PORTRAIT_URL}
-                    alt={profile.displayName}
-                    className="max-h-full w-full object-contain object-bottom"
-                  />
+              <div className="grid gap-6 px-6 pb-7 pt-8 sm:grid-cols-[150px_1fr] sm:px-8 sm:pb-8">
+                <div className="relative flex min-h-48 items-end justify-center overflow-hidden rounded-3xl border border-white/10 bg-[radial-gradient(circle_at_50%_30%,rgba(168,85,247,.35),transparent_58%),#09070d]">
+                  <div className="absolute inset-x-4 bottom-3 h-9 rounded-full bg-[#A855F7]/35 blur-2xl" />
+                  <img src={PORTRAIT_URL} alt="Violoop device" className="relative z-10 max-h-44 w-full object-contain object-bottom" />
                 </div>
 
-                <h2
-                  id="contact-card-title"
-                  className="text-xl font-semibold uppercase tracking-wide text-mist"
-                >
-                  {profile.displayName}
-                </h2>
-                <p className="mt-1 text-xs text-mist/40">{profile.contact.location}</p>
+                <div>
+                  <div className="inline-flex items-center gap-2 rounded-full border border-[#A855F7]/35 bg-[#A855F7]/10 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-[#E9D5FF]"><Sparkles size={12} /> Founder access</div>
+                  <h2 id="early-access-title" className="mt-4 text-3xl font-black uppercase leading-none text-mist">Meet the second user of your computer.</h2>
+                  <p className="mt-4 text-sm leading-6 text-mist/55">A screen-aware device that prepares cross-app actions and keeps every commitment behind your physical approval.</p>
 
-                <div className="glass-panel glass-panel-subtle mt-4 flex flex-col items-center gap-1.5 rounded-xl px-4 py-3">
-                  <img
-                    src={CURRENT_COMPANY.logo}
-                    alt={CURRENT_COMPANY.name}
-                    className="h-5 w-auto max-w-[7.5rem] object-contain"
-                  />
-                  <p className="text-xs text-mist/65">Desktop AI Operator · Product Demo</p>
+                  <div className="mt-5 grid grid-cols-3 gap-2 border-y border-white/10 py-4 text-center">
+                    <div><p className="text-xl font-bold text-mist">$10</p><p className="mt-1 text-[9px] uppercase tracking-wider text-mist/35">Refundable hold</p></div>
+                    <div><p className="text-xl font-bold text-mist">$369</p><p className="mt-1 text-[9px] uppercase tracking-wider text-mist/35">Founder price</p></div>
+                    <div><p className="text-xl font-bold text-[#C084FC]">$330</p><p className="mt-1 text-[9px] uppercase tracking-wider text-mist/35">Potential saving</p></div>
+                  </div>
+
+                  <div className="mt-5 flex flex-col gap-2.5">
+                    <a href="https://violoop.ai/reserve/" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-[#5227FF] via-[#A855F7] to-[#FF9FFC] px-5 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-white">Reserve early access <ArrowUpRight size={15} /></a>
+                    <a href="https://www.kickstarter.com/projects/bvio/violoop-plug-in-ai-for-your-computer" target="_blank" rel="noreferrer" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 px-5 py-3 text-xs uppercase tracking-[0.14em] text-mist/70 transition hover:border-[#A855F7]/50 hover:text-mist">Follow on Kickstarter <ArrowUpRight size={15} /></a>
+                  </div>
                 </div>
-
-                <ul className="mt-5 space-y-3 text-left">
-                  <li>
-                    <a
-                      href={`mailto:${profile.contact.email}`}
-                      className="glass-panel glass-panel-subtle flex items-center gap-3 rounded-xl px-4 py-3 text-sm text-mist transition-colors hover:bg-white/[0.04]"
-                    >
-                      <Mail className="h-4 w-4 shrink-0 text-[#FF9FFC]" />
-                      <span className="break-all">{profile.contact.email}</span>
-                    </a>
-                  </li>
-                  <li>
-                    <button
-                      type="button"
-                      onClick={copyWeChat}
-                      className="glass-panel glass-panel-subtle flex w-full items-center gap-3 rounded-xl px-4 py-3 text-left text-sm text-mist transition-colors hover:bg-white/[0.04]"
-                      title="Click to copy brand account"
-                    >
-                      <WeChatIcon className="h-4 w-4 shrink-0 text-[#C084FC]" />
-                      <span>
-                        BRAND ACCOUNT · {profile.contact.wechat}
-                        <span
-                          className={`ml-2 text-xs transition-colors ${
-                            copied ? 'text-[#C084FC]' : 'text-mist/40'
-                          }`}
-                        >
-                          {copied ? 'COPIED' : 'DEMO CONTACT'}
-                        </span>
-                      </span>
-                    </button>
-                  </li>
-                </ul>
               </div>
+              <div className="flex items-center justify-center gap-2 border-t border-white/10 px-6 py-3 text-[10px] uppercase tracking-[0.14em] text-mist/35"><ShieldCheck size={12} className="text-[#C084FC]" /> Refundable reservation · Campaign terms apply</div>
             </BorderGlow>
           </motion.div>
         </motion.div>

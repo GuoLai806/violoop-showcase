@@ -1,7 +1,6 @@
 import { ChevronLeft, ChevronRight, ShieldCheck } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import FadeIn from '../ui/FadeIn'
-import Web3dSceneViewer from '../ui/Web3dSceneViewer'
 import { PRODUCT_CASES, PRODUCT_STATS } from '../../data/products'
 
 export default function ProductsSection() {
@@ -14,7 +13,6 @@ export default function ProductsSection() {
 
   useEffect(() => {
     PRODUCT_CASES.forEach((product) => {
-      if (product.sceneId) return
       const img = new Image()
       img.src = product.image
     })
@@ -53,13 +51,17 @@ export default function ProductsSection() {
             <div className="w-full min-w-0 overflow-hidden rounded-[28px] border border-mist/15 bg-[#0f0f0f] shadow-[0_24px_80px_rgba(0,0,0,0.35)] sm:rounded-[34px]">
               <div className="projects-feature-grid grid w-full min-w-0 grid-cols-1">
                 <div className="relative min-h-[250px] min-w-0 overflow-hidden bg-[#070707] sm:min-h-[340px] lg:min-h-[520px] lg:border-r lg:border-mist/10">
-                  {activeProduct.sceneId ? (
-                    <Web3dSceneViewer
-                      key={activeProduct.sceneId}
-                      sceneId={activeProduct.sceneId}
-                      fallbackImage={activeProduct.image}
-                      demoNotice={activeProduct.sceneDemoNotice}
-                      className="absolute inset-0"
+                  {activeProduct.video ? (
+                    <video
+                      key={activeProduct.video}
+                      src={activeProduct.video}
+                      poster={activeProduct.image}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                      className="absolute inset-0 h-full w-full object-cover"
                     />
                   ) : (
                     <>
@@ -71,7 +73,7 @@ export default function ProductsSection() {
                         height={1024}
                         decoding="async"
                         fetchPriority="high"
-                        className="block h-full w-full max-w-full bg-[#070707] object-contain object-center transition-opacity duration-300"
+                        className="block h-full w-full max-w-full bg-[#070707] object-cover object-center transition-opacity duration-300"
                       />
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-dark/20 via-transparent to-dark/10" />
                     </>

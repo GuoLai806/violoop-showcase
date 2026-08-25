@@ -3,6 +3,8 @@ export const SITE_SECTIONS = [
   { id: 'about', label: 'About VIO', href: '#about' },
   { id: 'map', label: 'Workplaces', href: '#map' },
   { id: 'products', label: 'Violoop', href: '#products' },
+  { id: 'modes', label: 'Modes', href: '#modes' },
+  { id: 'pricing', label: 'Pricing', href: '#pricing' },
 ] as const
 
 export type SiteSectionId = (typeof SITE_SECTIONS)[number]['id']

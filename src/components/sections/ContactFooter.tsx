@@ -1,45 +1,26 @@
-import { Mail } from 'lucide-react'
-import { profile } from '../../data/profile'
-import { useCopyFeedback } from '../../hooks/useCopyFeedback'
 import ContactButton from '../ui/ContactButton'
-import WeChatIcon from '../ui/WeChatIcon'
+
+const channels = [
+  ['KICKSTARTER', 'https://www.kickstarter.com/projects/bvio/violoop-plug-in-ai-for-your-computer'],
+  ['INSTAGRAM', 'https://www.instagram.com/violoop_ai/'],
+  ['DISCORD', 'https://discord.gg/pBQWBvhCaN'],
+  ['YOUTUBE', 'https://www.youtube.com/@Bvio-Tech'],
+  ['X / TWITTER', 'https://x.com/violoop'],
+] as const
 
 export default function ContactFooter() {
-  const { copied, copy } = useCopyFeedback()
-
-  const itemClass =
-    'inline-flex items-center gap-2 rounded-full border border-mist/10 px-4 py-2 text-sm text-mist/70 transition-colors hover:border-mist/25 hover:text-mist'
-
   return (
-    <footer
-      id="contact"
-      className="border-t border-mist/10 px-4 pb-16 pt-12 text-center sm:px-0 sm:pb-20 sm:pt-16"
-    >
-      <p className="mb-2 text-sm uppercase tracking-widest text-mist/50">
-        {profile.displayName} · {profile.title}
-      </p>
+    <footer id="contact" className="overflow-hidden border-t border-mist/10 px-4 pb-12 pt-16 text-center sm:px-8 sm:pb-16 sm:pt-20">
+      <div className="mx-auto max-w-6xl">
+        <p className="text-[10px] uppercase tracking-[0.35em] text-[#C084FC]">VIOLOOP · SCREEN-AWARE AI HARDWARE</p>
+        <h2 className="mx-auto mt-5 max-w-4xl text-balance text-4xl font-black uppercase leading-[0.95] text-mist sm:text-6xl md:text-7xl">Your computer already has a user. Give it a second one.</h2>
+        <p className="mx-auto mt-6 max-w-2xl text-sm leading-7 text-mist/45 sm:text-base">Point anywhere. Violoop reads the screen locally, prepares the work across applications, and waits for your physical approval.</p>
+        <div className="mt-8"><ContactButton label="RESERVE EARLY ACCESS" /></div>
 
-      <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
-        <button
-          type="button"
-          onClick={() => copy(profile.contact.wechat)}
-          className={itemClass}
-          title="Click to copy brand account"
-        >
-          <WeChatIcon className="h-4 w-4 text-[#C084FC]" />
-          <span>{copied ? 'COPIED' : `BRAND ACCOUNT · ${profile.contact.wechat}`}</span>
-        </button>
-
-        <a href={`mailto:${profile.contact.email}`} className={itemClass}>
-          <Mail className="h-4 w-4 text-[#FF9FFC]" />
-          <span>{profile.contact.email}</span>
-        </a>
-      </div>
-
-      <p className="mt-4 text-sm text-mist/40">{profile.contact.location}</p>
-
-      <div className="mt-8">
-        <ContactButton label="EXPERIENCE VIOLOOP" />
+        <div className="mt-14 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 border-t border-mist/10 pt-7">
+          {channels.map(([label, href]) => <a key={label} href={href} target="_blank" rel="noreferrer" className="text-[10px] uppercase tracking-[0.2em] text-mist/35 transition hover:text-[#C084FC]">{label}</a>)}
+        </div>
+        <p className="mt-6 text-[10px] uppercase tracking-[0.16em] text-mist/25">© 2026 BVIO Technology Limited · All rights reserved</p>
       </div>
     </footer>
   )
