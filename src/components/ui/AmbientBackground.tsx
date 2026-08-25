@@ -66,18 +66,18 @@ void main() {
   float secondary = caustic((uv + vec2(0.17, -0.11)) * 0.92) * 0.42;
   float network = primary + secondary;
 
-  vec3 deep = vec3(0.008, 0.003, 0.018);
-  vec3 violet = vec3(0.18, 0.035, 0.42);
-  vec3 color = mix(deep, violet, smoothstep(1.15, 0.05, length(p)) * 0.55);
-  color += vec3(0.43, 0.10, 0.92) * network;
-  color += vec3(0.92, 0.48, 1.0) * pow(primary, 1.8) * 0.62;
+  vec3 deep = vec3(0.006, 0.002, 0.014);
+  vec3 violet = vec3(0.115, 0.018, 0.27);
+  vec3 color = mix(deep, violet, smoothstep(1.15, 0.05, length(p)) * 0.42);
+  color += vec3(0.31, 0.055, 0.68) * network;
+  color += vec3(0.74, 0.30, 0.90) * pow(primary, 1.8) * 0.46;
 
   float scanA = laser(p, -0.34, sin(uTime * 0.18) * 0.44, 0.006);
   float scanB = laser(p, 0.58, cos(uTime * 0.13 + 1.7) * 0.52, 0.004);
   float scanGlow = laser(p, -0.34, sin(uTime * 0.18) * 0.44, 0.04);
-  color += vec3(0.72, 0.22, 1.0) * scanGlow * 0.08;
-  color += vec3(0.92, 0.62, 1.0) * scanA * 0.72;
-  color += vec3(0.50, 0.16, 1.0) * scanB * 0.38;
+  color += vec3(0.58, 0.13, 0.88) * scanGlow * 0.055;
+  color += vec3(0.78, 0.38, 0.96) * scanA * 0.48;
+  color += vec3(0.38, 0.08, 0.74) * scanB * 0.26;
 
   float vignette = 0.45 + 0.55 * smoothstep(1.35, 0.08, length(p));
   color *= vignette;
@@ -157,7 +157,11 @@ export default function AmbientBackground() {
       }
     }
 
-    const dropRipple = (event: PointerEvent) => {
+    let lastPointerUpdate = 0
+    const followPointer = (event: PointerEvent) => {
+      const now = performance.now()
+      if (event.type === 'pointermove' && now - lastPointerUpdate < 28) return
+      lastPointerUpdate = now
       ripple = [event.clientX / window.innerWidth, 1 - event.clientY / window.innerHeight, 0]
     }
 
@@ -181,14 +185,16 @@ export default function AmbientBackground() {
     }
 
     window.addEventListener('resize', resize, { passive: true })
-    window.addEventListener('pointerdown', dropRipple, { passive: true })
+    window.addEventListener('pointermove', followPointer, { passive: true })
+    window.addEventListener('pointerdown', followPointer, { passive: true })
     resize()
     animationFrame = window.requestAnimationFrame(draw)
 
     return () => {
       window.cancelAnimationFrame(animationFrame)
       window.removeEventListener('resize', resize)
-      window.removeEventListener('pointerdown', dropRipple)
+      window.removeEventListener('pointermove', followPointer)
+      window.removeEventListener('pointerdown', followPointer)
       if (program) gl.deleteProgram(program)
       if (vertex) gl.deleteShader(vertex)
       if (fragment) gl.deleteShader(fragment)
