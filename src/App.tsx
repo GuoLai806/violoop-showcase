@@ -5,6 +5,7 @@ import MarqueeSection from './components/sections/MarqueeSection'
 import MapSection from './components/sections/MapSection'
 import ProductsSection from './components/sections/ProductsSection'
 import SiteNav from './components/ui/SiteNav'
+import AmbientBackground from './components/ui/AmbientBackground'
 import ContactFooter from './components/sections/ContactFooter'
 import { ArchitectureSection, FaqSection, ModesSection, PricingSection } from './components/sections/ExperienceSections'
 
@@ -23,16 +24,19 @@ export default function App() {
     <div className="overflow-x-clip bg-dark font-kanit">
       <SiteNav />
       <HeroSection />
-      <MarqueeSection />
-      <AboutSection />
-      <MapSection />
-      <ProductsSection />
-      <ModesSection />
-      <ArchitectureSection />
-      <PricingSection />
-      <FaqSection />
-      <div className="relative z-10 bg-dark">
-        <ContactFooter />
+      <div className="ambient-stage relative isolate">
+        <AmbientBackground />
+        <div className="ambient-content relative z-10">
+          <MarqueeSection />
+          <AboutSection />
+          <MapSection />
+          <ProductsSection />
+          <ModesSection />
+          <ArchitectureSection />
+          <PricingSection />
+          <FaqSection />
+          <ContactFooter />
+        </div>
       </div>
     </div>
   )

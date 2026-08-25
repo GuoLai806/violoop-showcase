@@ -33,6 +33,77 @@ body,
   -moz-osx-font-smoothing: grayscale;
 }
 
+.ambient-stage {
+  background: #08060d;
+}
+
+.ambient-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.ambient-background__sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.ambient-background__canvas,
+.ambient-background__veil,
+.ambient-background__grid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ambient-background__canvas {
+  display: block;
+  opacity: 0.68;
+  filter: saturate(1.2) contrast(1.08);
+}
+
+.ambient-background__veil {
+  background:
+    radial-gradient(circle at 50% 48%, transparent 0%, rgba(5, 3, 10, 0.1) 38%, rgba(5, 3, 10, 0.72) 100%),
+    linear-gradient(180deg, rgba(8, 6, 13, 0.08), rgba(8, 6, 13, 0.38));
+}
+
+.ambient-background__grid {
+  opacity: 0.16;
+  background-image:
+    linear-gradient(rgba(192, 132, 252, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(192, 132, 252, 0.08) 1px, transparent 1px);
+  background-size: 72px 72px;
+  -webkit-mask-image: radial-gradient(circle at center, black, transparent 78%);
+  mask-image: radial-gradient(circle at center, black, transparent 78%);
+}
+
+.ambient-content > section,
+.ambient-content > footer {
+  background-color: transparent !important;
+}
+
+@media (max-width: 639px) {
+  .ambient-background__canvas {
+    opacity: 0.54;
+  }
+
+  .ambient-background__grid {
+    background-size: 48px 48px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-background__canvas {
+    opacity: 0.38;
+  }
+}
+
 .hero-heading {
   background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
   -webkit-background-clip: text;
