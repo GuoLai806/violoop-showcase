@@ -16,7 +16,7 @@ type PortraitElectricOutlineProps = {
 
 export default function PortraitElectricOutline({
   imageSrc,
-  color = '#FF9FFC',
+  color = '#7CEBDD',
   speed = 1,
   chaos = 0.12,
   thickness = 2,

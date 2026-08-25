@@ -129,13 +129,13 @@ export default function BorderGlow({
   className = '',
   edgeSensitivity = 30,
   glowColor = '40 80 80',
-  backgroundColor = '#120F17',
+  backgroundColor = '#071412',
   borderRadius = 28,
   glowRadius = 40,
   glowIntensity = 1,
   coneSpread = 25,
   animated = false,
-  colors = ['#c084fc', '#f472b6', '#38bdf8'],
+  colors = ['#5eead4', '#2dd4bf', '#38bdf8'],
   fillOpacity = 0.5,
   style = {},
 }: BorderGlowProps) {
@@ -301,7 +301,7 @@ export default function BorderGlow({
       onPointerLeave={handlePointerLeave}
       className={`glass-panel relative isolate grid ${className}`}
       style={{
-        background: `linear-gradient(145deg, rgba(18, 15, 23, 0.9) 0%, rgba(18, 15, 23, 0.72) 100%), ${backgroundColor}`,
+        background: `linear-gradient(145deg, rgba(7, 20, 18, 0.9) 0%, rgba(7, 20, 18, 0.72) 100%), ${backgroundColor}`,
         backdropFilter: 'blur(22px) saturate(135%)',
         WebkitBackdropFilter: 'blur(22px) saturate(135%)',
         borderRadius: `${borderRadius}px`,

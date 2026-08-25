@@ -40,7 +40,7 @@ export default function HeroPortrait({ src, alt, className }: HeroPortraitProps)
       {loaded && (
         <PortraitElectricOutline
           imageSrc={src}
-          color="#C084FC"
+          color="#5EEAD4"
           speed={1}
           chaos={0.12}
           thickness={2}

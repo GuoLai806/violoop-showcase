@@ -34,12 +34,12 @@ export default function ChinaMapSvg({ litProvinceIds, hoveredProvinceId, selecte
 
   return (
     <div className="absolute inset-0 overflow-hidden bg-[#08060d]" aria-label="Violoop APAC workplaces">
-      <div className="absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(168,85,247,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(168,85,247,.08)_1px,transparent_1px)] [background-size:54px_54px]" />
-      <div className="absolute left-[28%] top-[8%] h-[70%] w-[52%] rounded-[45%] bg-[#7c3aed]/10 blur-[90px]" />
-      <div className="absolute left-[45%] top-[54%] h-[38%] w-[38%] rounded-full bg-[#d946ef]/10 blur-[80px]" />
+      <div className="absolute inset-0 opacity-50 [background-image:linear-gradient(rgba(21,184,166,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(21,184,166,.08)_1px,transparent_1px)] [background-size:54px_54px]" />
+      <div className="absolute left-[28%] top-[8%] h-[70%] w-[52%] rounded-[45%] bg-[#0d9488]/10 blur-[90px]" />
+      <div className="absolute left-[45%] top-[54%] h-[38%] w-[38%] rounded-full bg-[#14b8a6]/10 blur-[80px]" />
 
       {connections.map(([from, to]) => (
-        <div key={`${from.id}-${to.id}`} className="absolute h-px bg-gradient-to-r from-[#7C3AED]/35 via-[#D946EF]/90 to-[#A855F7]/35 shadow-[0_0_16px_rgba(168,85,247,.8)]" style={lineStyle(from, to)} />
+        <div key={`${from.id}-${to.id}`} className="absolute h-px bg-gradient-to-r from-[#0D9488]/35 via-[#14B8A6]/90 to-[#15B8A6]/35 shadow-[0_0_16px_rgba(21,184,166,.8)]" style={lineStyle(from, to)} />
       ))}
 
       {nodes.map((node) => {
@@ -57,9 +57,9 @@ export default function ChinaMapSvg({ litProvinceIds, hoveredProvinceId, selecte
             onClick={(event) => { event.stopPropagation(); if (litProvinceIds.has(node.id)) onProvinceClick(node.id) }}
             aria-label={`${node.id}, Violoop workplace`}
           >
-            <span className={`absolute inset-4 rounded-full border transition duration-300 ${active ? 'border-[#F0ABFC] bg-[#7C3AED]/35 shadow-[0_0_42px_rgba(168,85,247,.95)]' : hovered ? 'border-[#D8B4FE] bg-[#A855F7]/25 shadow-[0_0_32px_rgba(168,85,247,.75)]' : 'border-[#A855F7]/70 bg-[#4C1D95]/30 shadow-[0_0_22px_rgba(168,85,247,.45)]'}`} />
-            <span className="absolute inset-[38px] rounded-full bg-[#F5D0FE] shadow-[0_0_18px_rgba(240,171,252,1)]" />
-            <span className="absolute inset-0 animate-ping rounded-full border border-[#A855F7]/20 [animation-duration:2.8s]" />
+            <span className={`absolute inset-4 rounded-full border transition duration-300 ${active ? 'border-[#99F6E4] bg-[#0D9488]/35 shadow-[0_0_42px_rgba(21,184,166,.95)]' : hovered ? 'border-[#99F6E4] bg-[#15B8A6]/25 shadow-[0_0_32px_rgba(21,184,166,.75)]' : 'border-[#15B8A6]/70 bg-[#115E59]/30 shadow-[0_0_22px_rgba(21,184,166,.45)]'}`} />
+            <span className="absolute inset-[38px] rounded-full bg-[#CCFBF1] shadow-[0_0_18px_rgba(153,246,228,1)]" />
+            <span className="absolute inset-0 animate-ping rounded-full border border-[#15B8A6]/20 [animation-duration:2.8s]" />
           </button>
         )
       })}

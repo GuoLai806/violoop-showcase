@@ -207,7 +207,7 @@ export default function Web3dSceneViewer({
                 onClick={() => triggerSceneEvent(event)}
                 className={`rounded-lg border px-2.5 py-1.5 text-[10px] font-medium backdrop-blur-sm transition sm:px-3 sm:py-2 sm:text-[11px] ${
                   isActive
-                    ? 'border-[#A855F7]/70 bg-[#A855F7]/25 text-[#E9D5FF]'
+                    ? 'border-[#15B8A6]/70 bg-[#15B8A6]/25 text-[#CCFBF1]'
                     : 'border-mist/15 bg-dark/75 text-mist/70 hover:border-mist/30 hover:bg-dark/90 hover:text-mist'
                 }`}
               >

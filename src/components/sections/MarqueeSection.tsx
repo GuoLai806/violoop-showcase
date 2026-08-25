@@ -184,7 +184,7 @@ function MarqueeVideo({
       ref={containerRef}
       onTouchStart={weChatTapToPlay ? handleTouchStart : undefined}
       onClick={handleOpen}
-      className="glass-panel group relative shrink-0 cursor-pointer overflow-hidden rounded-2xl bg-[#0a0a0c]/50 text-left transition-transform hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#FF9FFC]"
+      className="glass-panel group relative shrink-0 cursor-pointer overflow-hidden rounded-2xl bg-[#0a0a0c]/50 text-left transition-transform hover:scale-[1.02] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#7CEBDD]"
       style={{
         width: cardWidth,
         aspectRatio: cardAspectRatio(isMobile),
@@ -367,7 +367,7 @@ function MobileMarqueeCarousel({
             aria-label={`Go to workflow ${i + 1}`}
             onClick={() => scrollToIndex(i)}
             className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === index ? 'w-5 bg-[#FF9FFC]' : 'w-1.5 bg-mist/25'
+              i === index ? 'w-5 bg-[#7CEBDD]' : 'w-1.5 bg-mist/25'
             }`}
           />
         ))}

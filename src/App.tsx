@@ -2,7 +2,6 @@ import { lazy, Suspense } from 'react'
 import AboutSection from './components/sections/AboutSection'
 import HeroSection from './components/sections/HeroSection'
 import MarqueeSection from './components/sections/MarqueeSection'
-import MapSection from './components/sections/MapSection'
 import ProductsSection from './components/sections/ProductsSection'
 import SiteNav from './components/ui/SiteNav'
 import AmbientBackground from './components/ui/AmbientBackground'
@@ -29,7 +28,6 @@ export default function App() {
         <div className="ambient-content relative z-10">
           <MarqueeSection />
           <AboutSection />
-          <MapSection />
           <ProductsSection />
           <ModesSection />
           <ArchitectureSection />

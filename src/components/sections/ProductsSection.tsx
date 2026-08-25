@@ -39,7 +39,7 @@ export default function ProductsSection() {
 
         <FadeIn delay={0.08} y={24} onMount>
           <div className="mx-auto mt-4 flex max-w-3xl flex-col items-center gap-4 text-center sm:mt-5">
-            <span className="h-1 w-16 rounded-full bg-gradient-to-r from-[#5227FF] via-[#FF9FFC] to-[#B497CF]" />
+            <span className="h-1 w-16 rounded-full bg-gradient-to-r from-[#0B7F75] via-[#7CEBDD] to-[#5BCFC0]" />
             <p className="text-sm font-light tracking-[0.14em] text-mist/55 sm:text-base">
               HARDWARE, CAPABILITIES &amp; TRUST&nbsp;&nbsp;|&nbsp;&nbsp;AUTOCOMPLETE FOR YOUR REAL COMPUTER
             </p>
@@ -82,7 +82,7 @@ export default function ProductsSection() {
 
                 <div className="flex min-w-0 flex-col justify-center gap-6 p-6 sm:p-8 md:p-10 lg:p-12">
                   <div>
-                    <p className="mb-4 text-sm font-medium text-[#C084FC]">Featured Capability</p>
+                    <p className="mb-4 text-sm font-medium text-[#5EEAD4]">Featured Capability</p>
                     <h3 className="text-[1.75rem] font-bold leading-tight text-mist sm:text-4xl lg:text-[2.75rem]">
                       {activeProduct.title}
                     </h3>
@@ -90,7 +90,7 @@ export default function ProductsSection() {
                       {activeProduct.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="rounded-full border border-[#A855F7]/70 bg-[#A855F7]/10 px-4 py-1.5 text-xs tracking-wide text-[#E9D5FF]"
+                          className="rounded-full border border-[#15B8A6]/70 bg-[#15B8A6]/10 px-4 py-1.5 text-xs tracking-wide text-[#CCFBF1]"
                         >
                           {tag}
                         </span>
@@ -103,14 +103,14 @@ export default function ProductsSection() {
 
                   <div className="grid gap-6 border-y border-mist/10 py-6 sm:grid-cols-2 sm:gap-8">
                     <div>
-                      <p className="mb-4 text-sm font-medium text-[#C084FC]">How it works</p>
+                      <p className="mb-4 text-sm font-medium text-[#5EEAD4]">How it works</p>
                       <ul className="space-y-4">
                         {activeProduct.responsibilities.map((item) => {
                           const RoleIcon = item.icon
 
                           return (
                             <li key={item.text} className="flex items-start gap-3">
-                              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#A855F7]/12 text-[#C084FC]">
+                              <span className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#15B8A6]/12 text-[#5EEAD4]">
                                 <RoleIcon size={16} strokeWidth={1.8} />
                               </span>
                               <span className="pt-1 text-sm leading-6 text-mist/80">
@@ -123,12 +123,12 @@ export default function ProductsSection() {
                     </div>
 
                     <div className="sm:border-l sm:border-mist/10 sm:pl-8">
-                      <p className="mb-4 text-sm font-medium text-[#C084FC]">What you get</p>
+                      <p className="mb-4 text-sm font-medium text-[#5EEAD4]">What you get</p>
                       <ul className="space-y-4">
                         {activeProduct.outcomes.map((outcome) => (
                           <li key={outcome.label} className="flex gap-3">
                             <ShieldCheck
-                              className="mt-0.5 shrink-0 text-[#C084FC]"
+                              className="mt-0.5 shrink-0 text-[#5EEAD4]"
                               size={20}
                               strokeWidth={1.7}
                             />
@@ -164,7 +164,7 @@ export default function ProductsSection() {
                     </span>
                     <div className="h-1 min-w-0 flex-1 overflow-hidden rounded-full bg-mist/10">
                       <div
-                        className="h-full rounded-full bg-gradient-to-r from-[#5227FF] via-[#FF9FFC] to-[#B497CF] transition-all duration-300"
+                        className="h-full rounded-full bg-gradient-to-r from-[#0B7F75] via-[#7CEBDD] to-[#5BCFC0] transition-all duration-300"
                         style={{ width: progress }}
                       />
                     </div>
@@ -196,15 +196,15 @@ export default function ProductsSection() {
                     onClick={() => goToProduct(index)}
                     className={`group flex min-h-[86px] items-center gap-3.5 rounded-2xl border px-4 py-4 text-left transition ${
                       isActive
-                        ? 'border-[#A855F7] bg-[#A855F7]/10 shadow-[0_0_28px_rgba(168,85,247,0.22)]'
+                        ? 'border-[#15B8A6] bg-[#15B8A6]/10 shadow-[0_0_28px_rgba(21,184,166,0.22)]'
                         : 'border-mist/10 bg-[#111]/60 hover:border-mist/25 hover:bg-[#141414]'
                     }`}
                   >
                     <span
                       className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${
                         isActive
-                          ? 'bg-[#A855F7]/20 text-[#D8B4FE]'
-                          : 'bg-[#A855F7]/10 text-[#C084FC]/80'
+                          ? 'bg-[#15B8A6]/20 text-[#99F6E4]'
+                          : 'bg-[#15B8A6]/10 text-[#5EEAD4]/80'
                       }`}
                     >
                       <ProductIcon size={20} strokeWidth={1.7} />
@@ -238,7 +238,7 @@ export default function ProductsSection() {
                     }`}
                   >
                     <StatIcon
-                      className="shrink-0 text-[#C084FC]"
+                      className="shrink-0 text-[#5EEAD4]"
                       size={36}
                       strokeWidth={1.5}
                     />

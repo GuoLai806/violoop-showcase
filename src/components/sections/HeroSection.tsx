@@ -10,7 +10,7 @@ import { PORTRAIT_URL, profile } from '../../data/profile'
 
 const HERO_TITLE = `Hi, i'm ${profile.displayName}`
 
-const LIQUID_COLORS = ['#5227FF', '#A855F7', '#FF9FFC']
+const LIQUID_COLORS = ['#0B7F75', '#15B8A6', '#7CEBDD']
 
 export default function HeroSection() {
   const [liquidResolution, setLiquidResolution] = useState(0.5)

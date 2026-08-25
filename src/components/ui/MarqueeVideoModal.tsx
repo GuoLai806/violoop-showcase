@@ -78,13 +78,13 @@ export default function MarqueeVideoModal({ item, onClose }: MarqueeVideoModalPr
             className="relative w-full max-w-6xl overflow-hidden rounded-2xl border border-mist/15 bg-[#111] shadow-2xl sm:rounded-3xl"
             style={{
               boxShadow:
-                '0 24px 80px rgba(118, 33, 176, 0.35), inset 0 1px 0 rgba(255,255,255,0.06)',
+                '0 24px 80px rgba(21, 184, 166, 0.28), inset 0 1px 0 rgba(255,255,255,0.06)',
             }}
           >
             <div
               className="h-1.5 w-full"
               style={{
-                background: 'linear-gradient(90deg, #5227FF, #FF9FFC, #B497CF, #BE4C00)',
+                background: 'linear-gradient(90deg, #0B7F75, #7CEBDD, #5BCFC0, #BE4C00)',
               }}
             />
 

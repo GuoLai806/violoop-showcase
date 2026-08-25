@@ -34,7 +34,7 @@ body,
 }
 
 .ambient-stage {
-  background: linear-gradient(180deg, #0c0c0c 0, #09060f 320px, #07040c 860px);
+  background: linear-gradient(180deg, #0c0c0c 0, #06100f 320px, #040c0b 860px);
 }
 
 .ambient-stage::before {
@@ -79,15 +79,15 @@ body,
 
 .ambient-background__veil {
   background:
-    radial-gradient(circle at 50% 48%, rgba(8, 3, 16, 0.06) 0%, rgba(5, 2, 11, 0.26) 42%, rgba(4, 2, 8, 0.82) 100%),
-    linear-gradient(180deg, rgba(7, 4, 12, 0.22), rgba(7, 4, 12, 0.52));
+    radial-gradient(circle at 50% 48%, rgba(2, 15, 14, 0.06) 0%, rgba(2, 12, 11, 0.26) 42%, rgba(2, 8, 7, 0.82) 100%),
+    linear-gradient(180deg, rgba(3, 14, 13, 0.22), rgba(3, 14, 13, 0.52));
 }
 
 .ambient-background__grid {
   opacity: 0.16;
   background-image:
-    linear-gradient(rgba(192, 132, 252, 0.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(192, 132, 252, 0.08) 1px, transparent 1px);
+    linear-gradient(rgba(21, 184, 166, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(21, 184, 166, 0.08) 1px, transparent 1px);
   background-size: 72px 72px;
   -webkit-mask-image: radial-gradient(circle at center, black, transparent 78%);
   mask-image: radial-gradient(circle at center, black, transparent 78%);
@@ -98,7 +98,7 @@ body,
   background-color: transparent !important;
 }
 
-/* A single translucent black-violet surface language for post-hero content. */
+/* A single translucent cyan-black surface language for post-hero content. */
 .ambient-content :is(
   [class*="bg-[#06060a]"],
   [class*="bg-[#070707]"],
@@ -114,19 +114,19 @@ body,
   [class*="bg-[#14141a]"],
   [class*="bg-black/25"]
 ) {
-  background-color: rgba(17, 8, 29, 0.58) !important;
+  background-color: rgba(5, 22, 20, 0.58) !important;
   background-image: linear-gradient(
     145deg,
-    rgba(94, 42, 143, 0.16) 0%,
-    rgba(25, 10, 41, 0.54) 44%,
-    rgba(10, 5, 18, 0.68) 100%
+    rgba(21, 184, 166, 0.14) 0%,
+    rgba(7, 31, 28, 0.54) 44%,
+    rgba(4, 14, 13, 0.68) 100%
   ) !important;
-  border-color: rgba(216, 180, 254, 0.15) !important;
+  border-color: rgba(94, 234, 212, 0.15) !important;
   backdrop-filter: blur(18px) saturate(125%);
   -webkit-backdrop-filter: blur(18px) saturate(125%);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.055),
-    0 20px 70px rgba(3, 1, 8, 0.28);
+    0 20px 70px rgba(1, 8, 7, 0.28);
 }
 
 @media (max-width: 639px) {
@@ -213,7 +213,7 @@ body,
   width: 2rem;
   height: 2rem;
   border: 2px solid rgba(255, 255, 255, 0.08);
-  border-top-color: #a855f7;
+  border-top-color: #15b8a6;
   border-radius: 50%;
   animation: loading-spin 0.75s linear infinite;
 }
@@ -253,8 +253,8 @@ body,
     rgba(255, 255, 255, 0.38) 0%,
     rgba(255, 255, 255, 0.12) 32%,
     rgba(255, 255, 255, 0.05) 52%,
-    rgba(192, 132, 252, 0.32) 76%,
-    rgba(56, 189, 248, 0.24) 100%
+    rgba(94, 234, 212, 0.32) 76%,
+    rgba(21, 184, 166, 0.24) 100%
   );
   -webkit-mask:
     linear-gradient(#fff 0 0) content-box,

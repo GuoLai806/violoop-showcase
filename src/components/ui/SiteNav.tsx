@@ -135,7 +135,7 @@ export default function SiteNav() {
                   >
                     <span>{section.label}</span>
                     {isActive && (
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#FF9FFC]" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#7CEBDD]" />
                     )}
                   </a>
                 </li>

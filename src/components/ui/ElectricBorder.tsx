@@ -40,7 +40,7 @@ type ElectricBorderProps = {
 
 export default function ElectricBorder({
   children,
-  color = '#5227FF',
+  color = '#0B7F75',
   speed = 1,
   chaos = 0.12,
   thickness = 2,

@@ -70,12 +70,12 @@ function ProvinceLabelMark({
       <span
         className={`inline-flex items-center gap-1.5 rounded-full border pl-2.5 pr-1.5 py-1 font-['Noto_Sans_SC','Kanit',sans-serif] text-[12px] leading-none tracking-[0.08em] backdrop-blur-[6px] transition duration-200 sm:text-[13px] ${
           active
-            ? 'border-[#FF9FFC]/70 bg-[#2a1744]/92 text-[#FFE8FE] shadow-[0_0_16px_rgba(168,85,247,0.45)]'
-            : 'border-white/10 bg-black/55 text-[#E8E4F0]/90 hover:border-[#C084FC]/45 hover:bg-[#1a1228]/85 hover:text-[#F5E9FF]'
+            ? 'border-[#7CEBDD]/70 bg-[#2a1744]/92 text-[#E6FFFB] shadow-[0_0_16px_rgba(21,184,166,0.45)]'
+            : 'border-white/10 bg-black/55 text-[#E8E4F0]/90 hover:border-[#5EEAD4]/45 hover:bg-[#1a1228]/85 hover:text-[#E6FFFB]'
         }`}
       >
         {label.name}
-        <span className={`h-1.5 w-1.5 rounded-full ${active ? 'bg-[#F0ABFC] shadow-[0_0_10px_rgba(240,171,252,1)]' : 'bg-[#A855F7]'}`} />
+        <span className={`h-1.5 w-1.5 rounded-full ${active ? 'bg-[#99F6E4] shadow-[0_0_10px_rgba(153,246,228,1)]' : 'bg-[#15B8A6]'}`} />
       </span>
     </button>
   )
@@ -118,7 +118,7 @@ function ProvincePanel({
     >
       <div className="flex items-start justify-between gap-3">
         <div>
-          <p className="text-xs tracking-[0.14em] text-[#C084FC]">
+          <p className="text-xs tracking-[0.14em] text-[#5EEAD4]">
             {province.region} · VIOLOOP WORKPLACE
           </p>
           <h3 className="mt-2 text-2xl font-bold text-mist">{province.name}</h3>
@@ -148,7 +148,7 @@ function ProvincePanel({
                   key={item.id}
                   type="button"
                   onClick={() => onSelectProject(item)}
-                  className="w-full rounded-2xl border border-mist/10 bg-[#14141a] px-4 py-3 text-left transition hover:border-[#A855F7]/50 hover:bg-[#A855F7]/8"
+                  className="w-full rounded-2xl border border-mist/10 bg-[#14141a] px-4 py-3 text-left transition hover:border-[#15B8A6]/50 hover:bg-[#15B8A6]/8"
                 >
                   <p className="text-[11px] tracking-[0.12em] text-mist/40">
                     {item.year} · {item.category}
@@ -206,7 +206,7 @@ function ProvincePanel({
             </button>
 
             <div className="flex flex-wrap gap-2">
-              <span className="rounded-full border border-[#A855F7]/50 bg-[#A855F7]/10 px-3 py-1 text-xs text-[#E9D5FF]">
+              <span className="rounded-full border border-[#15B8A6]/50 bg-[#15B8A6]/10 px-3 py-1 text-xs text-[#CCFBF1]">
                 {selectedProject.category}
               </span>
               <span className="rounded-full border border-mist/15 px-3 py-1 text-xs text-mist/55">
@@ -227,7 +227,7 @@ function ProvincePanel({
             <ul className="mt-5 space-y-3 border-t border-mist/10 pt-5">
               {selectedProject.details.map((item) => (
                 <li key={item} className="flex gap-2.5 text-sm leading-6 text-mist/55">
-                  <span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-[#FF9FFC]/70" />
+                  <span className="mt-2.5 h-1 w-1 shrink-0 rounded-full bg-[#7CEBDD]/70" />
                   <span>{item}</span>
                 </li>
               ))}
@@ -259,7 +259,7 @@ function ZoomControls({
           onZoomIn()
         }}
         disabled={zoom >= MAX_ZOOM}
-        className="flex h-9 w-9 items-center justify-center rounded-xl border border-mist/15 bg-black/55 text-mist/80 backdrop-blur-sm transition hover:border-[#A855F7]/50 hover:text-mist disabled:opacity-35"
+        className="flex h-9 w-9 items-center justify-center rounded-xl border border-mist/15 bg-black/55 text-mist/80 backdrop-blur-sm transition hover:border-[#15B8A6]/50 hover:text-mist disabled:opacity-35"
         aria-label="Zoom in"
       >
         <Plus size={16} />
@@ -271,7 +271,7 @@ function ZoomControls({
           onZoomOut()
         }}
         disabled={zoom <= MIN_ZOOM}
-        className="flex h-9 w-9 items-center justify-center rounded-xl border border-mist/15 bg-black/55 text-mist/80 backdrop-blur-sm transition hover:border-[#A855F7]/50 hover:text-mist disabled:opacity-35"
+        className="flex h-9 w-9 items-center justify-center rounded-xl border border-mist/15 bg-black/55 text-mist/80 backdrop-blur-sm transition hover:border-[#15B8A6]/50 hover:text-mist disabled:opacity-35"
         aria-label="Zoom out"
       >
         <Minus size={16} />
@@ -282,7 +282,7 @@ function ZoomControls({
           e.stopPropagation()
           onReset()
         }}
-        className="flex h-9 w-9 items-center justify-center rounded-xl border border-mist/15 bg-black/55 text-mist/80 backdrop-blur-sm transition hover:border-[#A855F7]/50 hover:text-mist"
+        className="flex h-9 w-9 items-center justify-center rounded-xl border border-mist/15 bg-black/55 text-mist/80 backdrop-blur-sm transition hover:border-[#15B8A6]/50 hover:text-mist"
         aria-label="Reset view"
       >
         <RotateCcw size={14} />
@@ -544,11 +544,11 @@ export default function MapSection() {
 
         <FadeIn delay={0.06} y={20} onMount>
           <div className="mx-auto mt-4 flex max-w-3xl flex-col items-center gap-4 text-center">
-            <span className="h-1 w-16 rounded-full bg-gradient-to-r from-[#5227FF] via-[#FF9FFC] to-[#B497CF]" />
+            <span className="h-1 w-16 rounded-full bg-gradient-to-r from-[#0B7F75] via-[#7CEBDD] to-[#5BCFC0]" />
             <p className="text-sm font-light tracking-[0.14em] text-mist/55 sm:text-base">
               VIOLOOP APAC WORKPLACES&nbsp;&nbsp;|&nbsp;&nbsp;SELECT A CITY · SCROLL TO ZOOM · DRAG TO EXPLORE
             </p>
-            <p className="rounded-full border border-[#A855F7]/35 bg-[#A855F7]/10 px-4 py-1.5 text-sm tracking-wide text-[#E9D5FF]">
+            <p className="rounded-full border border-[#15B8A6]/35 bg-[#15B8A6]/10 px-4 py-1.5 text-sm tracking-wide text-[#CCFBF1]">
               <span className="font-semibold tabular-nums text-mist">3</span> COMPANY WORKPLACES ACROSS ASIA
             </p>
           </div>
@@ -604,7 +604,7 @@ export default function MapSection() {
               <div className="pointer-events-none absolute left-4 top-4 z-20 rounded-2xl border border-mist/10 bg-black/50 px-3 py-2 text-[11px] text-mist/50 backdrop-blur-sm sm:left-5 sm:top-5 sm:text-xs">
                 {litProvinceIds.size} COMPANY WORKPLACES · ONE GLOBAL TEAM
                 {isPanning && (
-                  <span className="ml-2 text-[#C084FC]">MOVING</span>
+                  <span className="ml-2 text-[#5EEAD4]">MOVING</span>
                 )}
               </div>
 

@@ -66,18 +66,18 @@ void main() {
   float secondary = caustic((uv + vec2(0.17, -0.11)) * 0.92) * 0.42;
   float network = primary + secondary;
 
-  vec3 deep = vec3(0.006, 0.002, 0.014);
-  vec3 violet = vec3(0.115, 0.018, 0.27);
-  vec3 color = mix(deep, violet, smoothstep(1.15, 0.05, length(p)) * 0.42);
-  color += vec3(0.31, 0.055, 0.68) * network;
-  color += vec3(0.74, 0.30, 0.90) * pow(primary, 1.8) * 0.46;
+  vec3 deep = vec3(0.002, 0.014, 0.013);
+  vec3 teal = vec3(0.018, 0.20, 0.18);
+  vec3 color = mix(deep, teal, smoothstep(1.15, 0.05, length(p)) * 0.42);
+  color += vec3(0.05, 0.55, 0.48) * network;
+  color += vec3(0.35, 0.96, 0.86) * pow(primary, 1.8) * 0.46;
 
   float scanA = laser(p, -0.34, sin(uTime * 0.18) * 0.44, 0.006);
   float scanB = laser(p, 0.58, cos(uTime * 0.13 + 1.7) * 0.52, 0.004);
   float scanGlow = laser(p, -0.34, sin(uTime * 0.18) * 0.44, 0.04);
-  color += vec3(0.58, 0.13, 0.88) * scanGlow * 0.055;
-  color += vec3(0.78, 0.38, 0.96) * scanA * 0.48;
-  color += vec3(0.38, 0.08, 0.74) * scanB * 0.26;
+  color += vec3(0.08, 0.72, 0.65) * scanGlow * 0.055;
+  color += vec3(0.42, 1.0, 0.90) * scanA * 0.48;
+  color += vec3(0.04, 0.48, 0.43) * scanB * 0.26;
 
   float vignette = 0.45 + 0.55 * smoothstep(1.35, 0.08, length(p));
   color *= vignette;
