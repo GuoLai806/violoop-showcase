@@ -530,9 +530,9 @@ export default function MapSection() {
   return (
     <section
       id="map"
-      className="relative z-10 overflow-x-clip bg-dark px-3 pb-12 sm:px-5 sm:pb-16 md:px-6 md:pb-20"
+      className="relative z-10 overflow-x-clip bg-dark px-3 py-16 sm:px-5 sm:py-20 md:px-6 md:py-28"
     >
-      <div className="mx-auto w-full max-w-[1500px] overflow-hidden rounded-[34px] border border-mist/15 bg-[#0b0b0b] px-5 py-8 shadow-[0_28px_110px_rgba(0,0,0,0.38)] sm:rounded-[44px] sm:px-8 sm:py-10 md:px-12 md:py-12 lg:px-14">
+      <div className="mx-auto w-full max-w-[1500px] px-2 sm:px-4 md:px-6">
         <FadeIn y={36} onMount>
           <h2
             className="hero-heading text-center font-black uppercase leading-none tracking-tight"

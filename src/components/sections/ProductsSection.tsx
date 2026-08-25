@@ -25,9 +25,9 @@ export default function ProductsSection() {
   return (
     <section
       id="products"
-      className="relative z-10 -mt-10 overflow-x-clip rounded-t-[40px] bg-dark px-3 pb-8 pt-0 sm:-mt-12 sm:rounded-t-[50px] sm:px-5 sm:pb-10 md:-mt-14 md:rounded-t-[60px] md:px-6 md:pb-12"
+      className="relative z-10 overflow-x-clip bg-dark px-3 py-16 sm:px-5 sm:py-20 md:px-6 md:py-28"
     >
-      <div className="mx-auto w-full max-w-[1500px] overflow-hidden rounded-[34px] border border-mist/15 bg-[#0b0b0b] px-5 py-8 shadow-[0_28px_110px_rgba(0,0,0,0.38)] sm:rounded-[44px] sm:px-8 sm:py-10 md:px-12 md:py-12 lg:px-14">
+      <div className="mx-auto w-full max-w-[1500px] px-2 sm:px-4 md:px-6">
         <FadeIn y={40} onMount>
           <h2
             className="hero-heading text-center font-black uppercase leading-none tracking-tight"

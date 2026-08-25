@@ -34,7 +34,17 @@ body,
 }
 
 .ambient-stage {
-  background: #07040c;
+  background: linear-gradient(180deg, #0c0c0c 0, #09060f 320px, #07040c 860px);
+}
+
+.ambient-stage::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 520px;
+  pointer-events: none;
+  background: linear-gradient(180deg, #0c0c0c 0%, rgba(12, 12, 12, 0.72) 28%, transparent 100%);
 }
 
 .ambient-background {
